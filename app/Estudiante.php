@@ -1,0 +1,157 @@
+<?php
+
+namespace App;
+
+use Eloquent;
+
+
+/**
+ * Class Estudiante
+ * 
+ * @property int $id
+ * @property string $cedula
+ * @property string $primer_nombre
+ * @property string $segundo_nombre
+ * @property string $primer_apellido
+ * @property string $segundo_apellido
+ * @property string $nacionalidad
+ * @property \Carbon\Carbon $fecha_nacimiento
+ * @property string $sexo
+ * @property string $direccion
+ * @property string $telefono_movil
+ * @property string $telefono_local
+ * @property string $email
+ * @property string $salf
+ * @property string $password
+ * @property string $estado_civil
+ * @property int $pais_id
+ * @property int $estado_id
+ * @property int $ciudad_id
+ * @property int $municipio_id
+ * @property int $etnia_id
+ * @property int $discapacidad_id
+ * @property string $twitter
+ * @property int $universidad_id
+ * @property int $tiposestudiante_id
+ * 
+ * @property \App\Models\Discapacidade $discapacidade
+ * @property \App\Models\Universidade $universidade
+ * @property \App\Models\Municipio $municipio
+ * @property \App\Models\Etnia $etnia
+ * @property \App\Models\Estado $estado
+ * @property \App\Models\TipoEstudiante $tipo_estudiante
+ * @property \App\Models\Pai $pai
+ * @property \App\Models\Ciudade $ciudade
+ * @property \Illuminate\Database\Eloquent\Collection $recibos_pagos
+ * @property \Illuminate\Database\Eloquent\Collection $espe_estuds
+ * @property \Illuminate\Database\Eloquent\Collection $sessiones
+ *
+ * @package App\Models
+ */
+class Estudiante extends Eloquent
+{
+	protected $table = 'estudiante';
+	public $timestamps = false;
+
+	protected $casts = [
+		'pais_id' => 'int',
+		'estado_id' => 'int',
+		'ciudad_id' => 'int',
+		'municipio_id' => 'int',
+		'etnia_id' => 'int',
+		'discapacidad_id' => 'int',
+		'universidad_id' => 'int',
+		'tiposestudiante_id' => 'int'
+	];
+
+	protected $dates = [
+		'fecha_nacimiento'
+	];
+
+	protected $hidden = [
+		'password'
+	];
+
+	protected $fillable = [
+		'cedula',
+		'primer_nombre',
+		'segundo_nombre',
+		'tercer_nombre',
+		'primer_apellido',
+		'segundo_apellido',
+		'nacionalidad',
+		'fecha_nacimiento',
+		'sexo',
+		'direccion',
+		'telefono_movil',
+		'telefono_local',
+		'email',
+		'salf',
+		'password',
+		'estado_civil',
+		'pais_id',
+		'estado_id',
+		'ciudad_id',
+		'municipio_id',
+		'etnia_id',
+		'discapacidad_id',
+		'twitter',
+		'universidad_id',
+		'tiposestudiante_id'
+	];
+
+	public function discapacidade()
+	{
+		return $this->belongsTo(\App\Models\Discapacidade::class, 'discapacidad_id');
+	}
+
+	public function universidade()
+	{
+		return $this->belongsTo(\App\Models\Universidade::class, 'universidad_id');
+	}
+
+	public function municipio()
+	{
+		return $this->belongsTo(\App\Models\Municipio::class);
+	}
+
+	public function etnia()
+	{
+		return $this->belongsTo(\App\Models\Etnia::class);
+	}
+
+	public function estado()
+	{
+		return $this->belongsTo(\App\Models\Estado::class);
+	}
+
+	public function tipo_estudiante()
+	{
+		return $this->belongsTo(\App\Models\TipoEstudiante::class, 'tiposestudiante_id');
+	}
+
+	public function pai()
+	{
+		return $this->belongsTo(\App\Models\Pai::class, 'pais_id');
+	}
+
+	public function ciudade()
+	{
+		return $this->belongsTo(\App\Models\Ciudade::class, 'ciudad_id');
+	}
+
+	public function recibos_pagos()
+	{
+		return $this->hasMany(\App\Models\RecibosPago::class);
+	}
+
+	public function espe_estuds()
+	{
+		return $this->hasMany(\App\Models\EspeEstud::class);
+	}
+
+	public function sessiones()
+	{
+		return $this->hasMany(\App\Models\Sessione::class);
+	}
+}
